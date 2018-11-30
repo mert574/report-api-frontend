@@ -1,25 +1,34 @@
 import React, { Component } from 'react';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './Stylesheets/bootstrap.min.css';
 import './App.css';
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import {Col, Container, Row} from "reactstrap";
-import Navbar from './Components/Navbar';
-import Index from './Pages/Index';
-import Login from './Pages/Login';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import {Container} from "reactstrap";
+import Navbar from './components/Navbar';
+import Index from './pages/Index';
+import Login from './pages/Login';
+import Report from './pages/Report';
+import List from './pages/List';
+import Transaction from './pages/Transaction';
+import Client from './pages/Client';
 
 class App extends Component {
     render() {
         return (
             <Router>
-                <div>
+                <>
                     <Navbar/>
-                    <Container>
+                    <Container id="container">
                         <Route path="/" exact component={Index} />
                         <Route path="/login" component={Login} />
+                        <Route path="/report" component={Report} />
+                        <Route path="/list" component={List} />
+                        <Route path="/info/transaction" component={Transaction} />
+                        <Route path="/info/client" component={Client} />
+                        
                     </Container>
-                </div>
+                </>
             </Router>
         );
     }
