@@ -5,7 +5,7 @@ import {Link, Redirect} from "react-router-dom";
 import { connect } from 'react-redux';
 import { updateToken } from '../actions';
 import {Row, Col} from 'reactstrap';
-import { Query } from '../Util';
+import { sendRequest } from '../Util';
 
 class Login extends Component {
     constructor(props) {
@@ -26,21 +26,18 @@ class Login extends Component {
 
         this.setState({ "waiting": true });
 
-        setTimeout(() => {
-            this.setState({ "waiting": false });
-            this.props.dispatch(updateToken("sdfjdsfjkldsfjlksdfjklsfdjklsfdjksfd")); 
-        }, 1000);
-
-        Query(event.target.action, "POST", {"email": "em", "password": "passw"});
-        
-        /*const url = `${event.target.action}?email=${this.state.email}&password=${this.state.password}`;
-        const post = await fetch(url, { "method": event.target.method }).then(r=>r.json());
+        const post = await sendRequest(event.target.action, "POST", {
+            "email": this.state.email,
+            "password": this.state.password
+        });
 
         if (post.status === "APPROVED") {
             this.props.dispatch(updateToken(post.token));
         } else if (post.status === "DECLINED") {
            this.setState({"message": post.message});
-       }*/
+        }
+
+        this.setState({ "waiting": false });
     }
 
     changed(event) {

@@ -10,6 +10,7 @@ import Index from './pages/Index';
 import Login from './pages/Login';
 import Report from './pages/Report';
 import List from './pages/List';
+import Logs from './pages/Logs';
 import Transaction from './pages/Transaction';
 import Client from './pages/Client';
 
@@ -26,7 +27,7 @@ class App extends Component {
                         <Route path="/list" component={List} />
                         <Route path="/info/transaction" component={Transaction} />
                         <Route path="/info/client" component={Client} />
-                        
+                        <Route path="/logs" component={Logs} />
                     </Container>
                 </>
             </Router>

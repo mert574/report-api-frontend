@@ -3,14 +3,15 @@ import { connect } from 'react-redux';
 import {Row, Col, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { parseDate, sendRequest } from '../Util';
 
 class Report extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            startDate: new Date(2000, 1, 1),
-            endDate: new Date(2000, 1, 10)
+            "startDate": new Date(2000, 1, 1),
+            "endDate": new Date(2000, 1, 10)
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -21,10 +22,16 @@ class Report extends React.Component {
         this.setState({[name]: date});
     }
 
-    onQuery(event) {
+    async onQuery(event) {
         event.preventDefault();
 
-        console.log(event, this.state.startDate.toString());
+        const area = document.getElementById('result');
+        const resp = await sendRequest('http://localhost:8080/transactions/report', 'POST', {
+            "fromDate": parseDate(this.state.startDate),
+            "toDate": parseDate(this.state.endDate)
+        });
+
+        area.value = JSON.stringify(resp);
     }
 
     render() {
@@ -45,6 +52,7 @@ class Report extends React.Component {
                             className="form-control"
                             showYearDropdown
                             showMonthDropdown
+                            block
                         />
                     </Col>
                     <Col sm="6">
@@ -60,6 +68,7 @@ class Report extends React.Component {
                             className="form-control"
                             showYearDropdown
                             showMonthDropdown
+                            block
                         />
                     </Col>
                     <Col sm="12"><small className="form-text text-muted">Query will be limited between these dates.</small></Col>
@@ -75,7 +84,7 @@ class Report extends React.Component {
                     <small className="form-text text-muted">Optional</small>
                 </FormGroup>
                 <FormGroup>
-                    <Button type="submit" block color="primary">Query</Button>
+                    <Button type="submit" color="primary" block>Query</Button>
                 </FormGroup>
             </Form>
             </Col>

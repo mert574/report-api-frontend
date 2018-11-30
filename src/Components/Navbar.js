@@ -34,11 +34,15 @@ class myNavbar extends React.Component {
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="mr-auto" navbar>
-                            <NavItem className={this.props.tokenExists ? 'd-none' : ''}><NavLink tag={Link} to="/login">Login</NavLink></NavItem>
                             <NavItem><NavLink tag={Link} to="/report">Transactions Report</NavLink></NavItem>
                             <NavItem><NavLink tag={Link} to="/list">List Transactions</NavLink></NavItem>
                             <NavItem><NavLink tag={Link} to="/info/transaction">Transaction Info</NavLink></NavItem>
                             <NavItem><NavLink tag={Link} to="/info/client">Get Client</NavLink></NavItem>
+                        </Nav>
+
+                        <Nav className="ml-auto" navbar>
+                            <NavItem><NavLink tag={Link} to="/logs">Check Logs</NavLink></NavItem>
+                            <NavItem className={this.props.tokenExists ? 'd-none' : ''}><NavLink tag={Link} to="/login">Login</NavLink></NavItem>
                         </Nav>
                     </Collapse>
                 </Navbar>
