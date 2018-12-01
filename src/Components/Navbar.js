@@ -11,6 +11,7 @@ import {
 
 import {Link} from "react-router-dom";
 import { connect } from 'react-redux';
+import Countdown from './Countdown';
 
 class myNavbar extends React.Component {
     constructor(props) {
@@ -44,6 +45,10 @@ class myNavbar extends React.Component {
                             <NavItem><NavLink tag={Link} to="/logs">Check Logs</NavLink></NavItem>
                             <NavItem className={this.props.tokenExists ? 'd-none' : ''}><NavLink tag={Link} to="/login">Login</NavLink></NavItem>
                         </Nav>
+
+                        <div className={"authenticated badge badge-pill badge-info " + (this.props.tokenExists ? '' : 'd-none')}>
+                            Authenticated for: <Countdown />
+                        </div>
                     </Collapse>
                 </Navbar>
             </div>

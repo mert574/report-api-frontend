@@ -5,6 +5,13 @@ const LoginHandler = (state = [], action) => {
                 ...state,
                 "token": action.token
             };
+
+        case 'TOKEN_EXPIRED':
+            return {
+                ...state,
+                "token": null
+            }
+            
         default:
             return state;
     }

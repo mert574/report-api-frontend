@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-
-import '../Stylesheets/Login.css';
-import {Link, Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import { updateToken } from '../actions';
 import {Row, Col} from 'reactstrap';
@@ -17,14 +15,15 @@ class Login extends Component {
         this.state = {
             "email": "",
             "password": "",
-            "waiting": false
+            "waiting": false,
+            "message": null
         }
     }
 
     async submit(event) {
         event.preventDefault();
 
-        this.setState({ "waiting": true });
+        this.setState({ "waiting": true, "message": null });
 
         const post = await sendRequest(event.target.action, "POST", {
             "email": this.state.email,
@@ -34,10 +33,8 @@ class Login extends Component {
         if (post.status === "APPROVED") {
             this.props.dispatch(updateToken(post.token));
         } else if (post.status === "DECLINED") {
-           this.setState({"message": post.message});
+           this.setState({"message": post.message, "waiting": false});
         }
-
-        this.setState({ "waiting": false });
     }
 
     changed(event) {
@@ -51,6 +48,10 @@ class Login extends Component {
 
         return (
             <Row>
+                <Col md="12">
+                    <legend>Query <kbd>/merchant/user/login</kbd></legend>
+                    <hr />
+                </Col>
                 <Col id="loginPage" lg="6" className="m-auto">
                     <legend className="fadeIn second">Get Valid Token</legend>
 
@@ -70,7 +71,7 @@ class Login extends Component {
                         </div>
 
                         <div className="form-group">
-                            <input type="submit" className="btn btn-primary form-control fadeIn third" value="Log In" />
+                            <input type="submit" className="btn btn-primary form-control fadeIn third" value="Get Token" />
                             <div className={'progress ' + (this.state.waiting ? '':'d-none')}>
                                 <div className="progress-bar progress-bar-striped progress-bar-animated" style={{"width": "100%"}}></div>
                             </div>

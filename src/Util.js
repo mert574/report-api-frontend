@@ -12,10 +12,10 @@ export const sendRequest = async function sendRequest(url, method="POST", params
 }
 
 export const parseDate = function parseDate(date) {
-    return date.getFullYear() + '-' + dateNum(date.getMonth()) + '-' + dateNum(date.getDate());
+    return date.getFullYear() + '-' + paddedNum(date.getMonth() + 1) + '-' + paddedNum(date.getDate());
 }
 
-function dateNum(num) {
+export const paddedNum = function paddedNum(num) {
     return (num < 10) ? `0${num}` : `${num}`;
 }
 
