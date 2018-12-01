@@ -1,4 +1,5 @@
 import React from 'react';
+import {Row, Col, Button} from 'reactstrap';
 
 class Logs extends React.Component {
     componentDidMount() {
@@ -12,11 +13,18 @@ class Logs extends React.Component {
 
     render() {
         return (
-            <div>
-                <button className="btn" onClick={this.refresh}>Refresh</button>
-                <legend>Logs</legend>
-                <textarea id="logs" className="form-control" rows="64"></textarea>
-            </div>
+            <Row>
+                <Col xs="12">
+                    <Row>
+                        <Col tag="legend">Logs</Col>
+                        <Col><Button color="primary" className="float-right" onClick={this.refresh}>Refresh</Button></Col>
+                    </Row>
+                    <hr />
+                </Col>
+                <Col xs="12">
+                    <textarea id="logs" className="form-control" rows="32" readOnly></textarea>
+                </Col>
+            </Row>
         );
     };
 }

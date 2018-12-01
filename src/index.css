@@ -22,3 +22,11 @@ code {
 .badge.authenticated {
   padding: 8px;
 }
+
+#logs {
+  white-space: pre;
+  font-family: monospace;
+  overflow: scroll;
+  color: #000;
+  line-height: 1rem;
+}
