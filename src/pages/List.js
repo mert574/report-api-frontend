@@ -34,7 +34,7 @@ class List extends React.Component {
         event.preventDefault();
         this.setState({"json": {}, "loading": true});
 
-        const resp = await sendRequest('http://localhost:8080/transaction/list', 'POST', {
+        const resp = await sendRequest('/transaction/list', 'POST', {
             ...this.state,
             "json": undefined, "loading": undefined,
             "fromDate": parseDate(this.state.fromDate),

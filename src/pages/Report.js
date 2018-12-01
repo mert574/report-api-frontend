@@ -29,7 +29,7 @@ class Report extends React.Component {
         event.preventDefault();
         this.setState({"json": {}, "loading": true});
 
-        const resp = await sendRequest('http://localhost:8080/transactions/report', 'POST', {
+        const resp = await sendRequest('/transactions/report', 'POST', {
             "fromDate": parseDate(this.state.startDate),
             "toDate": parseDate(this.state.endDate)
         });

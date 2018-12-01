@@ -26,7 +26,7 @@ class Transaction extends React.Component {
         event.preventDefault();
         this.setState({"json": {}, "loading": true});
 
-        const resp = await sendRequest('http://localhost:8080/transaction', 'POST', {
+        const resp = await sendRequest('/transaction', 'POST', {
             "transactionId": this.state.transactionId
         });
 

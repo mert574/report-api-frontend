@@ -4,6 +4,7 @@ export const sendRequest = async function sendRequest(url, method="POST", params
     let params = "?";
 
     header.Authorization = extractAuth(Store.getState());
+    header.Accept = 'application/json';
 
     Object.entries(paramsObj).forEach(([key, val])=>{ params += `${key}=${val}&`; });
     params = params.substr(0, params.length-1);

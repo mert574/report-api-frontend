@@ -6,7 +6,7 @@ class Logs extends React.Component {
     }
 
     async refresh() {
-        const logs = await fetch('http://localhost:8080/actuator/logfile');
+        const logs = await fetch('/actuator/logfile');
         document.getElementById('logs').value = await logs.text();
     }
 

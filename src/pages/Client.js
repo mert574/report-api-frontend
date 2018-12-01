@@ -26,7 +26,7 @@ class Client extends React.Component {
         event.preventDefault();
         this.setState({"json": {}, "loading": true});
 
-        const resp = await sendRequest('http://localhost:8080/client', 'POST', {
+        const resp = await sendRequest('/client', 'POST', {
             "transactionId": this.state.transactionId
         });
 

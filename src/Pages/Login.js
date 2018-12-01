@@ -56,7 +56,7 @@ class Login extends Component {
                     <legend className="fadeIn second">Get Valid Token</legend>
 
                     <form id="loginForm" method="POST" 
-                        action="http://localhost:8080/merchant/user/login"
+                        action="/merchant/user/login"
                         onSubmit={this.submit}
                         onChange={this.changed}
                     >

@@ -37,7 +37,7 @@ class myNavbar extends React.Component {
                         <Nav className="mr-auto" navbar>
                             <NavItem><NavLink tag={Link} to="/report">Transactions Report</NavLink></NavItem>
                             <NavItem><NavLink tag={Link} to="/list">List Transactions</NavLink></NavItem>
-                            <NavItem><NavLink tag={Link} to="/info/transaction">Transaction Info</NavLink></NavItem>
+                            <NavItem><NavLink tag={Link} to="/info/transaction">Get Transaction</NavLink></NavItem>
                             <NavItem><NavLink tag={Link} to="/info/client">Get Client</NavLink></NavItem>
                         </Nav>
 
