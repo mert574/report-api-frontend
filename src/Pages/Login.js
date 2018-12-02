@@ -34,6 +34,8 @@ class Login extends Component {
             this.props.dispatch(updateToken(post.token));
         } else if (post.status === "DECLINED") {
             this.setState({"message": post.message, "waiting": false});
+        } else if (post.hasOwnProperty('Error')) {
+            this.setState({"message": post.Error, "waiting": false});
         }
     }
 
