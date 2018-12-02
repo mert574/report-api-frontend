@@ -1,29 +1,32 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import {Row, Col, Button, Form, FormGroup, Label, Input} from 'reactstrap';
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
-import { parseDate, sendRequest } from '../Util';
+import { sendRequest } from '../Util';
 import ReactJson from 'react-json-view';
 import Loader from '../components/Loader';
+import DateBetween from '../components/DateBetween';
 
 class Report extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            "startDate": new Date("2000-01-01"),
-            "endDate": new Date("2018-12-31"),
             "loading": false,
             "json": {}
         }
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeForm = this.handleChangeForm.bind(this);
         this.onQuery = this.onQuery.bind(this);
     }
 
-    handleChange(name, date) {
-        this.setState({[name]: date});
+    handleChange(change) {
+        this.setState(change);
+    }
+
+    handleChangeForm(event) {
+        const {id, value} = event.target;
+        this.setState({[id]: value.length > 0 ? value : undefined});
     }
 
     async onQuery(event) {
@@ -31,8 +34,9 @@ class Report extends React.Component {
         this.setState({"json": {}, "loading": true});
 
         const resp = await sendRequest('/transactions/report', 'POST', {
-            "fromDate": parseDate(this.state.startDate),
-            "toDate": parseDate(this.state.endDate)
+            ...this.state,
+            "loading": undefined,
+            "json": undefined
         });
 
         this.setState({"json": resp, "loading": false});
@@ -45,42 +49,9 @@ class Report extends React.Component {
                 <hr />
             </Col>
             <Col md="5">
-                <Form autoComplete="off" onSubmit={this.onQuery}>
-                    <Row className="form-group">
-                        <Col xs="6">
-                            <Label htmlFor="startDate">Start Date</Label>
-                            <DatePicker
-                                id="startDate"
-                                dateFormat="yyyy-MM-dd"
-                                selected={this.state.startDate}
-                                selectsStart
-                                startDate={this.state.startDate}
-                                endDate={this.state.endDate}
-                                onChange={d=>this.handleChange('startDate', d)}
-                                className="form-control"
-                                showYearDropdown
-                                showMonthDropdown
-                                block
-                            />
-                        </Col>
-                        <Col xs="6">
-                            <Label htmlFor="endDate">End Date</Label>
-                            <DatePicker
-                                id="endDate"
-                                dateFormat="yyyy-MM-dd"
-                                selected={this.state.endDate}
-                                selectsEnd
-                                startDate={this.state.startDate}
-                                endDate={this.state.endDate}
-                                onChange={d=>this.handleChange('endDate', d)}
-                                className="form-control"
-                                showYearDropdown
-                                showMonthDropdown
-                                block
-                            />
-                        </Col>
-                        <Col sm="12"><small className="form-text text-muted">Query will be limited between these dates.</small></Col>
-                    </Row>
+                <Form autoComplete="off" onSubmit={this.onQuery} onChange={this.handleChangeForm}>
+                    <DateBetween className="form-group" onChange={this.handleChange} />
+
                     <FormGroup>
                         <Label htmlFor="merchantId">Merchant ID</Label>
                         <Input type="number" id="merchantId" placeholder="Enter Merchant ID" />

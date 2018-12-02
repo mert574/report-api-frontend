@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { parseDate, sendRequest } from '../Util';
 import ReactJson from 'react-json-view';
 import Loader from '../components/Loader';
+import DateBetween from '../components/DateBetween';
 
 class List extends React.Component {
     constructor(props) {
@@ -18,17 +19,17 @@ class List extends React.Component {
         }
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleChangeDate = this.handleChangeDate.bind(this);
+        this.handleChangeForm = this.handleChangeForm.bind(this);
         this.onQuery = this.onQuery.bind(this);
     }
 
-    handleChange(event) {
+    handleChangeForm(event) {
         const {id, value} = event.target;
         this.setState({[id]: value.length > 0 ? value : undefined});
     }
 
-    handleChangeDate(id, date) {
-        this.setState({[id]: date});
+    handleChange(change) {
+        this.setState(change);
     }
 
     async onQuery(event) {
@@ -38,8 +39,6 @@ class List extends React.Component {
         const resp = await sendRequest('/transaction/list', 'POST', {
             ...this.state,
             "json": undefined, "loading": undefined,
-            "fromDate": parseDate(this.state.fromDate),
-            "toDate": parseDate(this.state.toDate)
         });
 
         this.setState({"json": resp, "loading": false});
@@ -52,43 +51,8 @@ class List extends React.Component {
                 <hr />
             </Col>
             <Col md="5">
-                <Form autoComplete="off" onSubmit={this.onQuery}>
-                    <Row className="form-group">
-                        <Col xs="6">
-                            <Label htmlFor="startDate">Start Date</Label>
-                            <DatePicker
-                                id="fromDate"
-                                dateFormat="yyyy-MM-dd"
-                                selected={this.state.fromDate}
-                                selectsStart
-                                startDate={this.state.fromDate}
-                                endDate={this.state.endDate}
-                                onChange={d=>this.handleChangeDate('fromDate', d)}
-                                className="form-control"
-                                showYearDropdown
-                                showMonthDropdown
-                                block
-                            />
-                        </Col>
-                        <Col xs="6">
-                            <Label htmlFor="endDate">End Date</Label>
-                            <DatePicker
-                                id="endDate"
-                                dateFormat="yyyy-MM-dd"
-                                selected={this.state.toDate}
-                                selectsEnd
-                                startDate={this.state.fromDate}
-                                endDate={this.state.toDate}
-                                onChange={d=>this.handleChangeDate('toDate', d)}
-                                className="form-control"
-                                showYearDropdown
-                                showMonthDropdown
-                                block
-                            />
-                        </Col>
-                        <Col sm="12"><small className="form-text text-muted">Query will be limited between these dates.</small></Col>
-                    </Row>
-                    
+                <Form autoComplete="off" onSubmit={this.onQuery} onChange={this.handleChangeForm} >
+                    <DateBetween className="form-group" onChange={this.handleChange} />
                     <FormGroup>
                         <Label htmlFor="status">Status</Label>
                         <Input type="select" id="status" defaultValue="">
