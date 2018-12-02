@@ -9,7 +9,9 @@ export const sendRequest = async function sendRequest(url, method="POST", params
     Object.entries(paramsObj).forEach(([key, val])=>{ params += `${key}=${val}&`; });
     params = params.substr(0, params.length-1);
 
-    return await fetch(url + params, { "method": method, "headers": header }).then(r=>r.json());
+    return await fetch(url + params, { "method": method, "headers": header })
+        .then(r=>r.json())
+        .catch(err=>({"Error": err.toString() || "An Unknown error occurred."}));
 }
 
 export const parseDate = function parseDate(date) {
