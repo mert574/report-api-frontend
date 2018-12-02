@@ -4,13 +4,15 @@ import {Row, Col, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import "react-datepicker/dist/react-datepicker.css";
 import { sendRequest } from '../Util';
 import ReactJson from 'react-json-view';
+import Loader from '../components/Loader';
 
 class Client extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            "transactionId": null
+            "transactionId": null,
+            "loading": false
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -53,7 +55,7 @@ class Client extends React.Component {
             </Form>
             </Col>
             <Col md="7">
-                <Label htmlFor="result">Query Result</Label>
+                <Label htmlFor="result">Query Result <Loader visible={this.state.loading} /></Label>
                 <ReactJson src={this.state.json} name="QueryResult" theme="eighties" />
             </Col>
         </Row>);

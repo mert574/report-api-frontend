@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { parseDate, sendRequest } from '../Util';
 import ReactJson from 'react-json-view';
+import Loader from '../components/Loader';
 
 class List extends React.Component {
     constructor(props) {
@@ -195,7 +196,7 @@ class List extends React.Component {
                 </Form>
             </Col>
             <Col md="7">
-                <Label htmlFor="result">Query Result</Label>
+                <Label htmlFor="result">Query Result <Loader visible={this.state.loading} /></Label>
                 <ReactJson src={this.state.json} name="QueryResult" theme="eighties" />
             </Col>
         </Row>);

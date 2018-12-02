@@ -1,3 +1,28 @@
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  overflow-y: scroll;
+}
+
 #container {
   padding-top: 60px;
+}
+
+.react-datepicker-wrapper, .react-datepicker__input-container {
+  width: 100%;
+}
+
+.badge.authenticated {
+  padding: 8px;
+}
+
+#logs {
+  white-space: pre;
+  font-family: monospace;
+  overflow: scroll;
+  color: #000;
+  line-height: 1rem;
 }
