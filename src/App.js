@@ -13,8 +13,19 @@ import List from './pages/List';
 import Logs from './pages/Logs';
 import Transaction from './pages/Transaction';
 import Client from './pages/Client';
+import { connect } from 'react-redux';
+import { updateToken } from './actions';
 
 class App extends Component {
+    componentWillMount() {
+        const authToken = localStorage.getItem('AuthToken');
+        const authExpire = localStorage.getItem('AuthExpire');
+
+        if (authExpire - Date.now() > 0) {
+            this.props.dispatch(updateToken(authToken, authExpire));
+        }
+    }
+
     render() {
         return (
             <Router>
@@ -35,4 +46,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default connect()(App);

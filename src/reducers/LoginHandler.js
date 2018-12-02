@@ -3,7 +3,8 @@ const LoginHandler = (state = [], action) => {
         case 'UPDATE_TOKEN':
             return {
                 ...state,
-                "token": action.token
+                "token": action.token,
+                "expiresOn": action.expiresOn
             };
 
         case 'TOKEN_EXPIRED':

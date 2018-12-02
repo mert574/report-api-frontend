@@ -33,7 +33,7 @@ class Login extends Component {
         if (post.status === "APPROVED") {
             this.props.dispatch(updateToken(post.token));
         } else if (post.status === "DECLINED") {
-           this.setState({"message": post.message, "waiting": false});
+            this.setState({"message": post.message, "waiting": false});
         }
     }
 

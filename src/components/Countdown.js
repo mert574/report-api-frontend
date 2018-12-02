@@ -1,5 +1,5 @@
 import React from 'react';
-import {paddedNum} from '../Util';
+import { paddedNum } from '../Util';
 import { connect } from 'react-redux';
 import { tokenExpired } from '../actions';
 
@@ -12,9 +12,9 @@ class Countdown extends React.Component {
         this.left = props.left;
 
         this.state = {
-            "mins": 10,
-            "seconds": 0,
-            "started": false
+            "started": false,
+            "mins": 0,
+            "seconds": 0
         }
 
         this.tick = this.tick.bind(this);
@@ -26,9 +26,17 @@ class Countdown extends React.Component {
         }
     }
 
+    calcTimeLeft() {
+        const diffSec = Math.floor((this.props.expiresOn - Date.now()) / 1000);
+        const leftSec = diffSec % 60;
+        const leftMins = (diffSec - leftSec) / 60;
+
+        return { "mins": leftMins, "seconds": leftSec };
+    }
+
     start() {
-        this.setState({"started": true, "mins": 10, "seconds": 0});
-        this.tick();
+        const { mins, seconds } = this.calcTimeLeft();
+        this.setState({ "started": true, mins, seconds }, this.tick);
     }
 
     componentDidUpdate() {
@@ -62,7 +70,10 @@ class Countdown extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return { "tokenExists": state.Login.token && state.Login.token.length > 0 };
+    return { 
+        "tokenExists": state.Login.token && state.Login.token.length > 0,
+        "expiresOn": state.Login.expiresOn || 0
+    };
 };
 
 export default connect(mapStateToProps)(Countdown);
