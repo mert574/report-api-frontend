@@ -9,9 +9,10 @@ import {
     NavLink,
 } from 'reactstrap';
 
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 import Countdown from './Countdown';
+import Health from './Health';
 
 class myNavbar extends React.Component {
     constructor(props) {
@@ -30,7 +31,7 @@ class myNavbar extends React.Component {
     render() {
         return (
             <div>
-                <Navbar color="dark" dark expand="md">
+                <Navbar color="dark" dark expand="lg">
                     <NavbarBrand tag={Link} to="/">Reporter</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
@@ -45,6 +46,8 @@ class myNavbar extends React.Component {
                             <NavItem><NavLink tag={Link} to="/logs">Check Logs</NavLink></NavItem>
                             <NavItem className={this.props.tokenExists ? 'd-none' : ''}><NavLink tag={Link} to="/login">Login</NavLink></NavItem>
                         </Nav>
+
+                        <Health className="badge navbar-text" />
 
                         <div className={"authenticated badge badge-pill badge-info " + (this.props.tokenExists ? '' : 'd-none')}>
                             Authenticated for: <Countdown />
